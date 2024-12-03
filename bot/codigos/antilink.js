@@ -37,11 +37,11 @@ const notifyAdmins = async (sock, groupId, offenderId) => {
         }
 
         // Mensagem a ser enviada com o usuário e os administradores mencionados
-        const message = `🚨🔗 *Mensagem suspeita removida!*  
-Usuário: @${offenderId.split('@')[0]}  
-Motivo: Mensagem continha um link que não é permitido no grupo.  
-Administradores: ${mentions.map(admin => `@${admin.split('@')[0]}`).join(', ')}  
-Por favor, avaliem a situação.`;
+        const message = `🚨🔗 *ᴍᴇɴꜱᴀɢᴇᴍ ꜱᴜꜱᴘᴇɪᴛᴀ ʀᴇᴍᴏᴠɪᴅᴀ!* \n  
+*𝚄𝚜𝚞𝚊𝚛𝚒𝚘:* @${offenderId.split('@')[0]} \n 
+*𝙼𝚘𝚝𝚒𝚟𝚘:* 🚨⚠️ Esta mensagem contém um link que não é permitido no grupo 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ NIGӇԵ* 💃🎶🍾🍸 \n  
+*🚨🔊 𝙰𝚍𝚖𝚒𝚗𝚒𝚜𝚝𝚛𝚊𝚍𝚘𝚛𝚎𝚜:* ${mentions.map(admin => `@${admin.split('@')[0]}`).join(', ')} \n  
+*𝙿𝙾𝚁 𝚅𝙰𝙵𝙾𝚁, 𝙰𝚅𝙰𝙻𝙸𝙴𝙼 𝙰 𝚂𝙸𝚃𝚄𝙰𝙲𝙰𝙾!*`;
 
         // Envia a mensagem para os administradores com menções
         await sock.sendMessage(groupId, {
