@@ -81,7 +81,7 @@ async function connectToWhatsApp() {
                     .map(admin => admin.id); // Lista de administradores
 
                 // Chama a função handleAntiLink para processar a verificação de links
-                await handleAntiLink(sock, message, adminNumbers);
+                await handleAntiLink(sock, message, from, adminNumbers); // Corrigido para passar o groupId (from)
             }
         } catch (err) {
             console.error("Erro ao processar mensagens:", err);
