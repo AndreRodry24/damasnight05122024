@@ -3,10 +3,10 @@ const getGroupInviteLink = async (sock, groupId) => {
     try {
         // Obtém o código de convite do grupo
         const inviteCode = await sock.groupInviteCode(groupId);
-        
+
         // Gera o link de convite com base no código
         const inviteLink = `https://chat.whatsapp.com/${inviteCode}`;
-        
+
         return inviteLink;
     } catch (error) {
         console.error('Erro ao obter o link de convite do grupo:', error);
@@ -14,47 +14,100 @@ const getGroupInviteLink = async (sock, groupId) => {
     }
 };
 
-export const handleAntiLink = async (sock, msg, groupId) => {
-    // Expressão regular para capturar URLs, incluindo http://, https://, www., e wa.me/<número>
-    const linkPattern = /((https?:\/\/|www\.|wa\.me\/\d+)[^\s]+)/img;
+// Função para notificar os administradores
+const notifyAdmins = async (sock, groupId, offenderId) => {
+    try {
+        // Obtém informações do grupo
+        const groupMetadata = await sock.groupMetadata(groupId);
 
-    let text = '';
+        // Filtra os administradores
+        const admins = groupMetadata.participants.filter(participant =>
+            participant.admin === 'admin' || participant.admin === 'superadmin'
+        );
 
-    // Verifica se a mensagem contém texto (pode ser uma mensagem simples ou uma extendedTextMessage)
-    if (msg.message.conversation) {
-        text = msg.message.conversation;
-    } else if (msg.message.extendedTextMessage) {
-        text = msg.message.extendedTextMessage.text;
-    }
+        // Gera a lista de mentions (IDs dos administradores)
+        const mentions = admins.map(admin => admin.id);
 
-    // Ignora mensagens do bot
-    if (msg.key.fromMe) return;
+        // Log para verificar administradores encontrados
+        console.log('Administradores identificados:', mentions);
 
-    // Obtém o link de convite do grupo
-    const groupInviteLink = await getGroupInviteLink(sock, groupId);
-
-    if (!groupInviteLink) return; // Se não conseguiu obter o link, não continua
-
-    // Normaliza o link de convite do grupo (remover qualquer `http://` ou `https://` para facilitar a comparação)
-    const normalizedGroupInviteLink = groupInviteLink.replace(/^https?:\/\//, '').toLowerCase();
-
-    // Verifica se a mensagem contém um link com base na expressão regular
-    const links = text.match(linkPattern);
-
-    if (links) {
-        // Verifica se algum link é diferente do link do grupo
-        for (let link of links) {
-            // Normaliza o link da mensagem
-            const normalizedLink = link.replace(/^https?:\/\//, '').toLowerCase();
-
-            // Compara o link da mensagem com o link do grupo
-            if (normalizedLink !== normalizedGroupInviteLink && !normalizedLink.includes(normalizedGroupInviteLink)) {
-                // Se o link for diferente, apaga a mensagem contendo o link
-                await sock.sendMessage(groupId, {
-                    delete: msg.key,
-                });
-                break; // Para assim que encontrar um link diferente
-            }
+        if (mentions.length === 0) {
+            console.log('Nenhum administrador encontrado no grupo.');
+            return;
         }
+
+        // Mensagem a ser enviada com o usuário e os administradores mencionados
+        const message = `🚨🔗 *Mensagem suspeita removida!*  
+Usuário: @${offenderId.split('@')[0]}  
+Motivo: Mensagem continha um link que não é permitido no grupo.  
+Administradores: ${mentions.map(admin => `@${admin.split('@')[0]}`).join(', ')}  
+Por favor, avaliem a situação.`;
+
+        // Envia a mensagem para os administradores com menções
+        await sock.sendMessage(groupId, {
+            text: message,
+            mentions: [offenderId, ...mentions], // Inclui o usuário e os administradores nas menções
+        });
+
+        console.log('Notificação enviada aos administradores.');
+    } catch (error) {
+        console.error('Erro ao notificar os administradores:', error);
+    }
+};
+
+// Função principal para tratar links não permitidos
+export const handleAntiLink = async (sock, msg, groupId) => {
+    try {
+        // Expressão regular para capturar URLs
+        const linkPattern = /((https?:\/\/|www\.|wa\.me\/\d+)[^\s]+)/img;
+
+        let text = '';
+
+        // Verifica se a mensagem contém texto (pode ser uma mensagem simples ou uma extendedTextMessage)
+        if (msg.message.conversation) {
+            text = msg.message.conversation;
+        } else if (msg.message.extendedTextMessage) {
+            text = msg.message.extendedTextMessage.text;
+        }
+
+        // Ignora mensagens do bot
+        if (msg.key.fromMe) return;
+
+        console.log('Texto da mensagem recebida:', text);
+
+        // Obtém o link de convite do grupo
+        const groupInviteLink = await getGroupInviteLink(sock, groupId);
+
+        if (!groupInviteLink) {
+            console.error('Não foi possível obter o link de convite do grupo.');
+            return;
+        }
+
+        const normalizedGroupInviteLink = groupInviteLink.replace(/^https?:\/\//, '').toLowerCase();
+
+        // Verifica se a mensagem contém links
+        const links = text.match(linkPattern);
+
+        if (links) {
+            for (let link of links) {
+                const normalizedLink = link.replace(/^https?:\/\//, '').toLowerCase();
+
+                // Compara o link da mensagem com o link do grupo
+                if (normalizedLink !== normalizedGroupInviteLink && !normalizedLink.includes(normalizedGroupInviteLink)) {
+                    // Apaga a mensagem contendo o link
+                    await sock.sendMessage(groupId, { delete: msg.key });
+
+                    console.log('Mensagem contendo link removida:', normalizedLink);
+
+                    // Notifica os administradores
+                    await notifyAdmins(sock, groupId, msg.key.participant || msg.key.remoteJid);
+                    break;  // Não precisa continuar verificando outros links na mesma mensagem
+                }
+            }
+        } else {
+            console.log('Nenhum link detectado na mensagem.');
+        }
+    } catch (error) {
+        console.error('Erro no handleAntiLink:', error);
     }
 };
