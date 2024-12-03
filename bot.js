@@ -6,6 +6,7 @@ import { configurarBoasVindas } from './bot/codigos/boasVindas.js';
 import configurarBloqueio from './bot/codigos/bloquearUsuarios.js';
 import { handleMessage as handleAdvertencias } from './bot/codigos/advertenciaGrupos.js';
 import { mencionarTodos } from './bot/codigos/marcarTodosGrupo.js';
+import { handleAntiLink } from './bot/codigos/antilink.js';
 
 async function connectToWhatsApp() {
     const { version } = await fetchLatestBaileysVersion();
@@ -31,6 +32,7 @@ async function connectToWhatsApp() {
         }
     });
 
+    // Configura o bloqueio e anti-link
     configurarBloqueio(sock);
 
     sock.ev.on("messages.upsert", async (m) => {
@@ -71,6 +73,15 @@ async function connectToWhatsApp() {
 
                 // Verifica e lida com a blacklist
                 await handleMessage(sock, message);
+
+                // Lida com o anti-link
+                const groupMeta = await sock.groupMetadata(from);
+                const adminNumbers = groupMeta.participants
+                    .filter(participant => participant.isAdmin)
+                    .map(admin => admin.id); // Lista de administradores
+
+                // Chama a função handleAntiLink para processar a verificação de links
+                await handleAntiLink(sock, message, adminNumbers);
             }
         } catch (err) {
             console.error("Erro ao processar mensagens:", err);
