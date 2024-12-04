@@ -7,6 +7,7 @@ import configurarBloqueio from './bot/codigos/bloquearUsuarios.js';
 import { handleMessage as handleAdvertencias } from './bot/codigos/advertenciaGrupos.js';
 import { mencionarTodos } from './bot/codigos/marcarTodosGrupo.js';
 import { handleAntiLink } from './bot/codigos/antilink.js';
+import { verificarFlood } from './bot/codigos/antiflood.js'; 
 
 async function connectToWhatsApp() {
     const { version } = await fetchLatestBaileysVersion();
@@ -48,6 +49,9 @@ async function connectToWhatsApp() {
             const content = message.message?.conversation || '';
             const from = message.key.remoteJid;
             const sender = message.key.participant || message.key.remoteJid;
+
+            // Chama a verificação de flood
+            await verificarFlood(sock, from, message);
 
             // Verifica se a mensagem é o comando #regras
             if (content === '#regras') {
