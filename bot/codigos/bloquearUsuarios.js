@@ -7,7 +7,7 @@ async function configurarBloqueio(sock) {
 
     // IDs dos usuários que não devem ser bloqueados
     const usuariosPermitidos = [
-        // '558599495181@s.whatsapp.net',
+        '558599495181@s.whatsapp.net',
         '558398759516@s.whatsapp.net',
         '558396805283@s.whatsapp.net',
         '558588272385@s.whatsapp.net',

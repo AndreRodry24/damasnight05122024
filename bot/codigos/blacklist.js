@@ -1,11 +1,12 @@
 export const blacklist = [
-    '558599495181@s.whatsapp.net',  // Exemplo de ID na blacklist
-    '558599495182@s.whatsapp.net',  // Número fictício
-    '558599495183@s.whatsapp.net',  // Número fictício
-    '558599495184@s.whatsapp.net',  // Número fictício
-    '558599495185@s.whatsapp.net',  // Número fictício
-    '558599495186@s.whatsapp.net',  // Número fictício
-    '558599495187@s.whatsapp.net'   // Número fictício
+    '556781366643@s.whatsapp.net', 
+    '5519992350482@s.whatsapp.net',
+    '5511970662569@s.whatsapp.net',
+    '5511999680582@s.whatsapp.net',
+    '5524999331275@s.whatsapp.net',
+    '+14259810678@s.whatsapp.net',
+    '5521989812827@s.whatsapp.net',
+    '5521975528535@s.whatsapp.net'  
 ];
 
 const BATCH_SIZE = 500; // Tamanho de cada lote para processamento da blacklist

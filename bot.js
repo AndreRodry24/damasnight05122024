@@ -7,7 +7,9 @@ import configurarBloqueio from './bot/codigos/bloquearUsuarios.js';
 import { handleMessage as handleAdvertencias } from './bot/codigos/advertenciaGrupos.js';
 import { mencionarTodos } from './bot/codigos/marcarTodosGrupo.js';
 import { handleAntiLink } from './bot/codigos/antilink.js';
-import { verificarFlood } from './bot/codigos/antiflood.js'; 
+import { verificarFlood } from './bot/codigos/antiflood.js';
+import { configurarDespedida } from './bot/codigos/despedidaMembro.js'; 
+import { handleGroupParticipantsUpdate } from './bot/codigos/avisoadm.js';
 
 async function connectToWhatsApp() {
     const { version } = await fetchLatestBaileysVersion();
@@ -33,7 +35,7 @@ async function connectToWhatsApp() {
         }
     });
 
-    // Configura o bloqueio e anti-link
+    // Configura o bloqueio, anti-link e despedida
     configurarBloqueio(sock);
 
     sock.ev.on("messages.upsert", async (m) => {
@@ -95,6 +97,9 @@ async function connectToWhatsApp() {
     sock.ev.on('group-participants.update', async (update) => {
         const { id: groupId, participants, action } = update;
 
+        // Integrando a função handleGroupParticipantsUpdate
+        await handleGroupParticipantsUpdate(sock, update, sock.info);
+
         if (action === 'add') {
             for (let participant of participants) {
                 if (blacklist.includes(participant)) {
@@ -105,6 +110,11 @@ async function connectToWhatsApp() {
                     console.log(`Enviando boas-vindas para o participante ${participant}...`);
                     await configurarBoasVindas(sock, groupId, participant);
                 }
+            }
+        } else if (action === 'remove') {  // Verifica a saída de participantes
+            for (let participant of participants) {
+                console.log(`Enviando mensagem de despedida para o participante ${participant}...`);
+                await configurarDespedida(sock, groupId, participant);
             }
         }
     });
