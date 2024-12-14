@@ -44,22 +44,22 @@ export const configurarBoasVindas = async (socket, groupId, participant) => {
             \n A festa agora tá completa com você por aqui! O clima é de pura energia 24h por dia! 🕛🔥 Vamos agitar, dançar e se divertir até não aguentar mais! 💬🎶🍾🍸
             \n \n Não perca tempo e mande logo *#regras* para entrar na onda e aproveitar tudo o que o grupo tem a oferecer! 😜🎉`,
 
-             `💃🍾🍸 𝐁𝐄𝐌-𝐕𝐈𝐍𝐃𝐎(𝐀) 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸 @${participantName} 
-             \n *Agora a energia do grupo subiu!* 🚀 Aqui, a diversão não tem hora pra começar e nem pra terminar! *24h de pura interação e boas vibrações!* 🕛🔥 Prepare-se para momentos épicos com muitos emojis, risadas e danças até o amanhecer! 💃🎶🍾🍸
-             \n \n *Não perca tempo!* 💃🔥 Digite *#regras* e entre na vibe que já está rolando por aqui! Vamos juntos agitar o grupo! 😎🎉`,
+            `💃🍾🍸 𝐁𝐄𝐌-𝐕𝐈𝐍𝐃𝐎(𝐀) 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸 @${participantName} 
+            \n *Agora a energia do grupo subiu!* 🚀 Aqui, a diversão não tem hora pra começar e nem pra terminar! *24h de pura interação e boas vibrações!* 🕛🔥 Prepare-se para momentos épicos com muitos emojis, risadas e danças até o amanhecer! 💃🎶🍾🍸
+            \n \n *Não perca tempo!* 💃🔥 Digite *#regras* e entre na vibe que já está rolando por aqui! Vamos juntos agitar o grupo! 😎🎉`,
 
-             `🎉👏💃 𝐁𝐄𝐌-𝐕𝐈𝐍𝐃𝐎(𝐀) @${participantName} 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸 Agora o grupo *DﾑMﾑS* está ainda mais poderoso!
-              \n 🚀💃 Prepare-se para uma onda de diversão, risadas e muita dança! 🎶🔥 Aqui, a diversão nunca para! Emojis, vibrações positivas e muita interação o tempo todo! 🕛🎉
-              \n \n *Não fique de fora!* 💃🎉 Digite *#regras* e entre no clima dessa festa sem fim! Vamos juntos fazer o grupo explodir de energia! 🎊🍾`,
+            `🎉👏💃 𝐁𝐄𝐌-𝐕𝐈𝐍𝐃𝐎(𝐀) @${participantName} 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸 Agora o grupo *DﾑMﾑS* está ainda mais poderoso!
+            \n 🚀💃 Prepare-se para uma onda de diversão, risadas e muita dança! 🎶🔥 Aqui, a diversão nunca para! Emojis, vibrações positivas e muita interação o tempo todo! 🕛🎉
+            \n \n *Não fique de fora!* 💃🎉 Digite *#regras* e entre no clima dessa festa sem fim! Vamos juntos fazer o grupo explodir de energia! 🎊🍾`,
 
 
             `👏💃🔥 𝐁𝐄𝐌-𝐕𝐈𝐍𝐃𝐎(𝐀) @${participantName} 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸
-             \n Agora o clima do grupo *DﾑMﾑS* está ON FIRE! 🔥 Vamos criar momentos inesquecíveis com muitas risadas, emojis e danças! 🎶💥 *Aqui, a diversão é garantida 24h por dia! Não tem hora pra parar!* 💃🕛🍸🍾 
-             \n \n *Entre no clima agora!* 💃🎉 Digite *#regras* e venha agitar com a gente! 🎤💃🔥 `,
+            \n Agora o clima do grupo *DﾑMﾑS* está ON FIRE! 🔥 Vamos criar momentos inesquecíveis com muitas risadas, emojis e danças! 🎶💥 *Aqui, a diversão é garantida 24h por dia! Não tem hora pra parar!* 💃🕛🍸🍾 
+            \n \n *Entre no clima agora!* 💃🎉 Digite *#regras* e venha agitar com a gente! 🎤💃🔥 `,
 
-             `🎉💥 𝑩𝑬𝑴-𝑽𝑰𝑵𝑫𝑶(𝐀) @${participantName} 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸
-             \n A vibe do grupo *DﾑMﾑS* acaba de subir ainda mais com você aqui! 🚀🎶 Prepare-se para curtir uma energia contagiante, com risadas, dança e emojis 24h por dia! 💃🎉🔥 Aqui, a diversão nunca tem fim! Vamos agitar, rir e viver os melhores momentos juntos! 🎊🍾🕛  
-             \n \n *Não fique de fora!* 💃🎉 Digite *#regras* e entre na vibe dessa festa incrível! 😎💥`
+            `🎉💥 𝑩𝑬𝑴-𝑽𝑰𝑵𝑫𝑶(𝐀) @${participantName} 𝐚𝐨 𝐠𝐫𝐮𝐩𝐨 👏🍻 *DﾑMﾑS* 💃🔥 *Dﾑ* *NIGӇԵ* 💃🎶🍾🍸
+            \n A vibe do grupo *DﾑMﾑS* acaba de subir ainda mais com você aqui! 🚀🎶 Prepare-se para curtir uma energia contagiante, com risadas, dança e emojis 24h por dia! 💃🎉🔥 Aqui, a diversão nunca tem fim! Vamos agitar, rir e viver os melhores momentos juntos! 🎊🍾🕛  
+            \n \n *Não fique de fora!* 💃🎉 Digite *#regras* e entre na vibe dessa festa incrível! 😎💥`
             
         ];
 
