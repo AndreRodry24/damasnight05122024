@@ -7,8 +7,11 @@ const MAX_MESSAGES = 10; // Limite máximo de mensagens permitido no intervalo
  * Verifica se o usuário excedeu o limite de mensagens permitido
  * e aplica a punição em caso de flood.
  */
-export async function verificarFlood(bot, chatId, message, mentions) {
+export async function verificarFlood(bot, chatId, message) {
     const sender = message.key.participant || message.key.remoteJid; // Identifica o remetente da mensagem
+
+    // Ignorar mensagens do bot ou mensagens sem remetente identificado
+    if (!sender || bot.user.jid === sender) return;
 
     // Inicializa o histórico de mensagens do usuário, caso ainda não exista
     if (!userMessageCount.has(sender)) {
@@ -43,6 +46,8 @@ async function aplicarPunicaoPorFlood(bot, chatId, user) {
 
         // Limpa o histórico de mensagens do usuário
         userMessageCount.delete(user);
+
+        console.log(`Usuário ${user} foi removido do grupo ${chatId} por flood.`);
     } catch (error) {
         console.error('Erro ao aplicar punição por flood:', error);
     }

@@ -8,8 +8,9 @@ import { handleMessage as handleAdvertencias } from './bot/codigos/advertenciaGr
 import { mencionarTodos } from './bot/codigos/marcarTodosGrupo.js';
 import { handleAntiLink } from './bot/codigos/antilink.js';
 import { verificarFlood } from './bot/codigos/antiflood.js';
-import { configurarDespedida } from './bot/codigos/despedidaMembro.js'; 
+import { configurarDespedida } from './bot/codigos/despedidaMembro.js';
 import { handleGroupParticipantsUpdate } from './bot/codigos/avisoadm.js';
+import { handleBanMessage } from './bot/codigos/banUsuario.js';
 
 async function connectToWhatsApp() {
     const { version } = await fetchLatestBaileysVersion();
@@ -52,6 +53,9 @@ async function connectToWhatsApp() {
             const from = message.key.remoteJid;
             const sender = message.key.participant || message.key.remoteJid;
 
+            // Verifica se a mensagem é o comando #ban
+            await handleBanMessage(sock, message);
+
             // Chama a verificação de flood
             await verificarFlood(sock, from, message);
 
@@ -84,10 +88,10 @@ async function connectToWhatsApp() {
                 const groupMeta = await sock.groupMetadata(from);
                 const adminNumbers = groupMeta.participants
                     .filter(participant => participant.isAdmin)
-                    .map(admin => admin.id); // Lista de administradores
+                    .map(admin => admin.id);
 
                 // Chama a função handleAntiLink para processar a verificação de links
-                await handleAntiLink(sock, message, from, adminNumbers); // Corrigido para passar o groupId (from)
+                await handleAntiLink(sock, message, from, adminNumbers);
             }
         } catch (err) {
             console.error("Erro ao processar mensagens:", err);
