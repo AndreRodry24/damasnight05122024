@@ -4,7 +4,8 @@ const { fetchProfilePictureUrl } = pkg;
 // Defina seus números de WhatsApp
 const yourNumbers = [
     '558599495181@s.whatsapp.net',
-    '558596603268@s.whatsapp.net',
+    '5521979452941@s.whatsapp.net',
+    '553287267561@s.whatsapp.net',
     '558398759516@s.whatsapp.net',
     '558396805283@s.whatsapp.net',
     '558588272385@s.whatsapp.net'
